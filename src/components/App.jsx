@@ -37,18 +37,14 @@ export const App = () => {
   return (
     <Layout>
       <Section title="Please leave feadback">
-        <FeedbackOptions
-          FeedBackList={review}
-          TotalFidback={countTotalFeedback()}
-          PositiveFeedback={countPositiveFeedbackPercentage()}
-          options={review}
-          onLeaveFeedback={addFeedback}
-        />
+        <FeedbackOptions options={review} onLeaveFeedback={addFeedback} />
       </Section>
 
       <Section title="Statistics">
         <Statistics
-          FeedBackList={review}
+          good={good}
+          neutral={neutral}
+          bad={bad}
           TotalFidback={countTotalFeedback()}
           PositiveFeedback={countPositiveFeedbackPercentage()}
         />

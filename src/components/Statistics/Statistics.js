@@ -3,7 +3,9 @@ import { Notification } from '../Notification/Notification';
 import { StatisticsStyle, Stat } from './Statistics.style';
 
 export const Statistics = ({
-  FeedBackList: { good, neutral, bad },
+  good,
+  neutral,
+  bad,
   TotalFidback,
   PositiveFeedback,
 }) => {
@@ -27,11 +29,9 @@ export const Statistics = ({
 };
 
 Statistics.propTypes = {
-  FeedBackList: PropTypes.shape({
-    good: PropTypes.number.isRequired,
-    neutral: PropTypes.number.isRequired,
-    bad: PropTypes.number.isRequired,
-  }).isRequired,
+  good: PropTypes.number.isRequired,
+  neutral: PropTypes.number.isRequired,
+  bad: PropTypes.number.isRequired,
   TotalFidback: PropTypes.number.isRequired,
   PositiveFeedback: PropTypes.number.isRequired,
 };
