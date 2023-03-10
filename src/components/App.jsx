@@ -1,59 +1,59 @@
 import { Layout } from './Layout';
 import { GlobalStyle } from './GlobalStyle';
-import { Component } from 'react';
+import { useState } from 'react';
 import { Statistics } from './Statistics/Statistics';
 import { FeedbackOptions } from './FeedbackOptions/FeedbackOptions';
 import { Section } from './Section/Section';
 
-export class App extends Component {
-  state = {
-    good: 0,
-    neutral: 0,
-    bad: 0,
+export const App = () => {
+  const [good, setGood] = useState(0);
+  const [neutral, setNeutral] = useState(0);
+  const [bad, setBad] = useState(0);
+
+  const review = ['good', 'neutral', 'bad'];
+
+  const addFeedback = value => {
+    switch (value) {
+      case 'good':
+        return setGood(prevState => prevState + 1);
+      case 'neutral':
+        return setNeutral(prevState => prevState + 1);
+      case 'bad':
+        return setBad(prevState => prevState + 1);
+      default:
+        return null;
+    }
   };
 
-  addFeedback = value => {
-    this.setState(prevState => {
-      return {
-        [value]: prevState[value] + 1,
-      };
-    });
-  };
-
-  countTotalFeedback() {
-    const { good, neutral, bad } = this.state;
-
+  const countTotalFeedback = () => {
     return good + neutral + bad;
-  }
+  };
 
-  countPositiveFeedbackPercentage() {
-    const { good, bad, neutral } = this.state;
+  const countPositiveFeedbackPercentage = () => {
     const percent = (good / (good + neutral + bad)) * 100;
     return Number(percent.toFixed(0));
-  }
+  };
 
-  render() {
-    return (
-      <Layout>
-        <Section title="Please leave feadback">
-          <FeedbackOptions
-            FeedBackList={this.state}
-            TotalFidback={this.countTotalFeedback()}
-            PositiveFeedback={this.countPositiveFeedbackPercentage()}
-            options={this.state}
-            onLeaveFeedback={this.addFeedback}
-          />
-        </Section>
+  return (
+    <Layout>
+      <Section title="Please leave feadback">
+        <FeedbackOptions
+          FeedBackList={review}
+          TotalFidback={countTotalFeedback()}
+          PositiveFeedback={countPositiveFeedbackPercentage()}
+          options={review}
+          onLeaveFeedback={addFeedback}
+        />
+      </Section>
 
-        <Section title="Statistics">
-          <Statistics
-            FeedBackList={this.state}
-            TotalFidback={this.countTotalFeedback()}
-            PositiveFeedback={this.countPositiveFeedbackPercentage()}
-          />
-        </Section>
-        <GlobalStyle />
-      </Layout>
-    );
-  }
-}
+      <Section title="Statistics">
+        <Statistics
+          FeedBackList={review}
+          TotalFidback={countTotalFeedback()}
+          PositiveFeedback={countPositiveFeedbackPercentage()}
+        />
+      </Section>
+      <GlobalStyle />
+    </Layout>
+  );
+};
